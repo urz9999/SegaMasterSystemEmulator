@@ -160,5 +160,31 @@ This section summarizes the Sega Master System hardware for emulator development
 ### Memory Mapping (meka.h, bmemory.cpp, mappers.h)
 - Memory map: $0000-$bfff (cartridge ROM/RAM), $c000-$dfff (system RAM), $e000-$ffff (RAM mirror).
 - Supports multiple mappers for different cartridge types (standard, CodeMasters, Korean, etc.).
-- SRAM and EEPROM emulation for battery-backed saves.
-- Memory pages are mapped dynamically based on mapper registers.
+		- SRAM and EEPROM emulation for battery-backed saves.
+		- Memory pages are mapped dynamically based on mapper registers.
+
+---
+
+## Debug Class ROM Header Extraction Results (Jan 11, 2026)
+
+- Implemented dynamic scan for TMR SEGA signature in ROMs.
+- Extracted all possible SMS ROM header fields:
+	- title (16 bytes before signature, often unused/padded)
+	- tmrSega (8 bytes, 'TMR SEGA')
+	- region (Export/Japan, from region byte)
+	- checksum (2 bytes)
+	- productCode (2 bytes, BCD)
+	- version (1 byte)
+	- sizeKB (1 byte, 16KB units)
+	- reserved (1 byte)
+	- copyright (8 bytes after header, sometimes present)
+	- countryCode (1 byte after copyright)
+	- rawHeader (full header bytes)
+	- hexHeader (header bytes as hex string)
+
+- Test results:
+	- Bomber Raid (World).sms: TMR SEGA found, title unused/padded, all fields extracted.
+	- Sonic The Hedgehog (USA, Europe).sms: TMR SEGA found, title unused/padded, all fields extracted.
+
+- Extraction logic matches SMS hardware spec; title field may be empty or padded in many ROMs.
+- Debug class ready for heavy use in Z80/VDP development and further header analysis.
