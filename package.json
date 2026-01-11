@@ -6,7 +6,8 @@
 		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
-		"test": "ts-node test/romDebugTest.ts"
+		"test:rom": "ts-node test/romDebugTest.ts",
+		"test:bios": "ts-node test/biosDebugTest.ts"
 	},
 	"devDependencies": {
 		"@types/node": "^20.19.28",
