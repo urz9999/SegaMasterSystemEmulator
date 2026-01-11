@@ -9,3 +9,5 @@ rom/
 *.tmp
 *.bak
 *.swp
+
+MEKA/

@@ -5,6 +5,9 @@ import Input from './Input';
 import Opcodes from './Opcodes';
 import Patch from './Patch';
 import Memory from './Memory';
+import { SRAM } from './SRAM';
+import { EEPROM } from './EEPROM';
+import { Mapper, MapperType } from './Mapper';
 
 export default class Emulator {
   private z80: Z80;
@@ -14,6 +17,9 @@ export default class Emulator {
   private opcodes: Opcodes;
   private patch: Patch;
   private memory: Memory;
+  private sram: SRAM;
+  private eeprom: EEPROM;
+  private mapper: Mapper;
   private canvas: HTMLCanvasElement | null = null;
   private gl: WebGLRenderingContext | null = null;
 
@@ -25,6 +31,9 @@ export default class Emulator {
     this.opcodes = new Opcodes();
     this.patch = new Patch();
     this.memory = new Memory();
+    this.sram = new SRAM();
+    this.eeprom = new EEPROM();
+    this.mapper = new Mapper();
     if (canvas) {
       this.canvas = canvas;
       this.gl = canvas.getContext('webgl');
